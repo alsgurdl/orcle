@@ -34,3 +34,10 @@ first_name || ' ' ||  last_name  || '''s salary is $' || salary AS 급여
 FROM employees;
 --DISTINCT (중복 행의 제거)
 SELECT department_id FROM employees;
+SELECT DISTINCT department_id FROM employees;
+--  ROWNUM,ROWID 
+--ROWNUM: 쿼리에의해 반환듸는 행 번호를 출력
+--ROWID: 데이버베이스 내역 행의 주소를 반환
+SELECT ROWNUM, ROWID ,employee_id
+FROM employees;
+
