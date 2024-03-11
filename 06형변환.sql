@@ -115,9 +115,9 @@ FROM EMPLOYEES;
 */
 SELECT
 hire_date as 입사일자,
-TRUNC(sysdate - hire_date)/365 as year
+TRUNC((sysdate - hire_date)/365) as year
 FROM employees
-where (sysdate - hire_date)/365 >= 17
+where ((sysdate - hire_date)/365) >= 17
 order by year DESC;
 /*
 문제 2.
