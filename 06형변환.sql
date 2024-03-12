@@ -119,6 +119,8 @@ TRUNC((sysdate - hire_date)/365) as year
 FROM employees
 where ((sysdate - hire_date)/365) >= 17
 order by year DESC;
+
+
 /*
 문제 2.
 EMPLOYEES 테이블의 manager_id컬럼을 확인하여 first_name, manager_id, 직급을 출력합니다.
