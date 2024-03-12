@@ -7,7 +7,7 @@ min(salary),
 sum(salary),
 count(salary)
 from employees;
-select count(*)from employees; --총 행 데이터의 수
+select count (*) from employees; --총 행 데이터의 수
 select count(first_name) from employees;
 select count(commission_pct) from employees;--null이 아닌 행의 수
 select count(manager_id) from employees;--null이 아닌 행의 수
@@ -22,7 +22,7 @@ group by department_id;
 
 --주의할점 
 -- 그룹함수는 단독적으로 사용할 때는 전체 테이블이 그룹의 대상이 되지만
---일만 컬럼과 동시에 그냥 출력할 수는 없습니다 그룹이 필요
+--일반 컬럼과 동시에 그냥 출력할 수는 없습니다 그룹이 필요
 select
 department_id,
 avg(salary)
