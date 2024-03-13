@@ -171,5 +171,57 @@ left join EMPLOYEES e2
 on e1.manager_id = e2.EMPLOYEE_id
 where e1.manager_id is not null
 order by e2.salary desc;
+select*from EMPLOYEES;
+
+-- 인라인 뷰 (FROM 구문에 서브쿼리가 오는 것.)
+-- 특정 테이블 전체가 아닌 SELECT를 통해 일부 데이터를 조회한 것을 가상 테이블로 사용하고 싶을 때. 
+-- 순번을 정해놓은 조회 자료를 범위를 지정해서 가지고 오는 경우.
+
+-- salary로 정렬을 진행하면서 바로 ROWNUM을 붙이면
+-- ROWNUM이 정렬이 되지 않는 상황이 발생합니다.
+-- 이유: ROWNUM이 먼저 붙고 정렬이 진행되기 때문. ORDER BY는 항상 마지막에 진행.
+-- 해결: 정렬이 미리 진행된 자료에 ROWNUM을 붙여서 다시 조회하는 것이 좋을 것 같아요.
+select
+employee_id, first_name,salary,rownum as rn
+from employees
+order by salary desc;
+
+-- ROWNUM을 붙이고 나서 범위를 지정해서 조회하려고 하는데,
+-- 범위 지정도 불가능하고, 지목할 수 없는 문제가 발생하더라.
+-- 이유: WHERE절부터 먼저 실행하고 나서 ROWNUM이 SELECT 되기 때문에.
+-- 해결: ROWNUM까지 붙여 놓고 다시 한 번 자료를 SELECT 해서 범위를 지정해야 되겠구나.
+
+select
+rownum as rn, tbl.*
+from
+    (
+    select
+    employee_id, first_name,salary
+    from employees
+    order by salary desc
+    ) tbl
+    where rn > 10 and rn <= 20;
+    /*
+가장 안쪽 SELECT 절에서 필요한 테이블 형식(인라인 뷰)을 생성.
+바깥쪽 SELECT 절에서 ROWNUM을 붙여서 다시 조회
+가장 바깥쪽 SELECT 절에서는 이미 붙어있는 ROWNUM의 범위를 지정해서 조회.
+
+** SQL의 실행 순서
+FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY
+*/
+    select * 
+    from
+    (select
+rownum as rn, tbl.*
+from
+    (
+    select
+    employee_id, first_name,salary
+    from employees
+    order by salary desc
+    ) tbl
+   )
+ where rn > 20 and rn <= 30;
+
 
 
