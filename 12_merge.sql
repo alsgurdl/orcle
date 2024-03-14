@@ -115,6 +115,64 @@ values(280,'개발' , 1800 )
 update depts set DEPARTMENT_ID = 301
 where DEPARTMENT_ID = 290;
 
+update depts set DEPARTMENT_NAME = 'IT bank'
+where DEPARTMENT_NAME = 'IT Support';
+
+update depts set DEPARTMENT_NAME = 'IT help' , 
+MANAGER_ID = 303, LOCATION_ID =1800 
+where DEPARTMENT_NAME = 'IT Helpdesk';
+
+update depts set MANAGER_ID = 301
+WHERE DEPARTMENT_ID IN (290,300,310,320);
+
+DELETE from depts
+where DEPARTMENT_ID = (SELECT DEPARTMENT_ID from depts where DEPARTMENT_NAME = '영업');
+
+DELETE from depts
+where DEPARTMENT_ID = (SELECT DEPARTMENT_ID from depts where DEPARTMENT_NAME = 'NOC');
+
+DELETE from depts
+where DEPARTMENT_ID > 200;
+
+UPDATE depts set MANAGER_ID = 100
+where MANAGER_ID is not null;
+
+SELECT * from depts;
+
+MERGE into depts a
+using DEPARTMENTS d
+on(a.DEPARTMENT_ID = d.DEPARTMENT_ID)
+when MATCHED THEN
+UPDATE set
+    a.DEPARTMENT_NAME = d.DEPARTMENT_NAME,
+    a.MANAGER_ID = d.MANAGER_ID,
+    a.LOCATION_ID = d.LOCATION_ID
+    when not MATCHED THEN
+    insert VALUES(
+    d.DEPARTMENT_ID, d.DEPARTMENT_NAME,d.MANAGER_ID,d.LOCATION_ID
+    );
+
+SELECT * from depts;
+create table jobs_it as
+(select *from JOBS where MIN_SALARY> 6000);
+SELECT * from jobs_it;
+
+insert into jobs_it VALUES('IT_DEV','아이티개발팀',6000,20000);
+insert into jobs_it VALUES('NET_DEV','네트워크',5000,20000);
+insert into jobs_it VALUES('SEC_DEV','보안',6000,19000);
+
+merge into jobs_it a
+using (select * from jobs where MIN_SALARY > 5000) b
+on (a.JOB_ID = b.JOB_ID)
+when MATCHED THEN
+UPDATE set
+a.MIN_SALARY = b.MIN_SALARY,
+a.MAX_SALARY = b.MAX_SALARY
+when not MATCHED THEN
+insert VALUES
+(b.JOB_ID,b.JOB_TITLE,b.MIN_SALARY,b.MAX_SALARY);
+
+
 
 
 
