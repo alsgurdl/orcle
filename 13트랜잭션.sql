@@ -10,6 +10,7 @@ DELETE from emps where EMPLOYEE_ID = 100;
 insert into emps
 (EMPLOYEE_ID,LAST_NAME,EMAIL,HIRE_DATE,JOB_ID)
 VALUES(304,'lee','fdasjf@gmail',sysdate,'test');
+
 -- 보류중 모든 데이터 변경사항을 취소(폐기)
 --직전 커밋 단계로 회귀(돌아가기) 및 트랜잭션 종료
 ROLLBACK;
